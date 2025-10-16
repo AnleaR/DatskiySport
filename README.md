@@ -43,11 +43,8 @@ cd datskiy-sport
 ### 2. Настройка конфигурации
 
 ```env
-BOT_TOKEN=токен_твоего_бота
-CHANNEL_ID=@datskiy_sport
-DATABASE_URL=jdbc:postgresql://localhost:5432/datskiy_sport
-DATABASE_USER=postgres
-DATABASE_PASSWORD=пароль
+BOT_TOKEN=токен_бота
+CHANNEL_ID=id телеграм канала
 ```
 
 ### 3. Установка зависимостей и запуск
