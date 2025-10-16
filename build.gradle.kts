@@ -38,6 +38,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-cors")
+    // telegram
+    implementation("dev.inmo:tgbotapi:29.0.1")
     // tests
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")

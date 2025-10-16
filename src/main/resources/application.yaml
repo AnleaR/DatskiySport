@@ -1,10 +1,20 @@
+default: true
 ktor:
   application:
     modules:
       - me.anlear.ApplicationKt.module
   deployment:
-    port: 8080
+    # YOUR SERVER PORT
+    port: 80
 jwt:
-  domain: "https://jwt-provider-domain/"
-  audience: "jwt-audience"
-  realm: "ktor sample app"
+  domain: "YOUR_DOMAIN"
+  audience: "YOUR_AUDIENCE"
+  realm: "YOUR_REALM"
+  secret: "YOUR_SECRET"
+app:
+  telegram:
+    botToken: "YOUR_BOT_TOKEN_HERE"
+  database:
+    url: "YOUR_URL"
+    user: "YOUR_USER"
+    password: "YOUR_PASSWORD"

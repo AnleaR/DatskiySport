@@ -1,12 +1,41 @@
 <configuration>
+    <!-- Каталог и файл логов (относительно корня проекта) -->
+    <property name="LOG_DIR" value="logs"/>
+    <property name="LOG_FILE" value="${LOG_DIR}/app.log"/>
+
+    <!-- Консольный аппендер — только WARN и выше -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
         <encoder>
-            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+
+    <!-- Файловый аппендер с ротацией по дате (ежедневно) -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Имя архивных файлов -->
+            <fileNamePattern>${LOG_DIR}/app.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- Хранить 30 файлов/дней -->
+            <maxHistory>30</maxHistory>
+            <!-- опционально: ограничение общего размера архивов (раскомментировать и задать при необходимости) -->
+            <!-- <totalSizeCap>1GB</totalSizeCap> -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Уровень по умолчанию — INFO. Root логгер пишет в файл и в консоль (консоль отфильтрована на WARN+) -->
     <root level="INFO">
+        <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </root>
+
+    <!-- Подтаскиваем логирование для внешних библиотек — оставляем INFO, чтобы уменьшить шум -->
     <logger name="org.eclipse.jetty" level="INFO"/>
     <logger name="io.netty" level="INFO"/>
 </configuration>
