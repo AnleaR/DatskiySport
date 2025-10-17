@@ -8,12 +8,12 @@ ktor:
     port: 80
 app:
   # URL, куда будут приходить запросы от Telegram
-  url: "https://datskiysport.ru"
+  url: "YOUR_URL"
   # Раз в сколько часов будет происходить обновление секретного токена
   secretLifetime: 4
   telegram:
     botToken: "YOUR_BOT_TOKEN_HERE"
   database:
-    url: "YOUR_URL"
-    user: "YOUR_USER"
-    password: "YOUR_PASSWORD"
+    url: "YOUR_DATABASE_URL"
+    user: "YOUR_DATABASE_USER"
+    password: "YOUR_DATABASE_PASSWORD"
