@@ -36,16 +36,19 @@
 ### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/anlear/datskiy-sport.git
-cd datskiy-sport
+git clone https://github.com/AnleaR/DatskiySport
+cd DatskiySport
 ```
 
 ### 2. Настройка конфигурации
 
-```env
-BOT_TOKEN=токен_бота
-CHANNEL_ID=id телеграм канала
-```
+Для настройки, необходимо изменить или переопределить [application.yaml](/src/main/resources/application.yaml).
+Первоначально нужно убрать поле `default` или поставить ему значение `false`, а после вносить свои изменения.
+**Но лучший вариант - создать локальный конфиг**. Вам нужно создать в папке [src/main/resources](/src/main/resources)
+файл с названием `application.local.yaml` и выполнять изменения в нём.
+Важно помнить, что если файл `application.local.yaml` существует, он всегда будет иметь приоритет над
+обычным [application.yaml](/src/main/resources/application.yaml).
+Единственное ограничение - **не удаляйте и не изменяйте поля `ktor.application.modules.*`**.
 
 ### 3. Установка зависимостей и запуск
 
@@ -64,15 +67,17 @@ CHANNEL_ID=id телеграм канала
  ┣ 📂 src
  ┃ ┣ 📂 main
  ┃ ┃ ┣ 📂 kotlin
- ┃ ┃ ┃ ┣ 📂 bot       # Основная логика Telegram-бота
- ┃ ┃ ┃ ┣ 📂 routes    # Эндпоинты Ktor
- ┃ ┃ ┃ ┣ 📂 services  # Работа с базой и бизнес-логика
+ ┃ ┃ ┃ ┣ 📂 api       # Основная RESTful логика
+ ┃ ┃ ┃ ┣ 📂 bot       # Логика Telegram
+ ┃ ┃ ┃ ┣ 📂 config    # Логика конфигураций
+ ┃ ┃ ┃ ┣ 📂 db        # Логика баз данных
  ┃ ┃ ┃ ┗ 📂 utils     # Утилиты и расширения
  ┃ ┃ ┗ 📂 resources
- ┃ ┃   ┗ 📜 application.conf
+ ┃ ┃   ┣ 📜 application.yaml  # Настройки приложения
+ ┃ ┃   ┗ 📜 logback.xml       # Настройки логирования
  ┣ 📜 build.gradle.kts
  ┣ 📜 README.md
- ┗ 📜 .env.example
+ ┗ 📜 LICENSE
 ```
 
 ## 🛣️ Дорожная карта (Roadmap)

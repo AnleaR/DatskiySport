@@ -6,12 +6,11 @@ ktor:
   deployment:
     # YOUR SERVER PORT
     port: 80
-jwt:
-  domain: "YOUR_DOMAIN"
-  audience: "YOUR_AUDIENCE"
-  realm: "YOUR_REALM"
-  secret: "YOUR_SECRET"
 app:
+  # URL, куда будут приходить запросы от Telegram
+  url: "https://datskiysport.ru"
+  # Раз в сколько часов будет происходить обновление секретного токена
+  secretLifetime: 4
   telegram:
     botToken: "YOUR_BOT_TOKEN_HERE"
   database:

@@ -3,14 +3,19 @@ val logback_version: String by project
 
 plugins {
     kotlin("jvm") version "2.2.20"
+    kotlin("plugin.serialization") version "2.2.20"
     id("io.ktor.plugin") version "3.3.0"
 }
 
 group = "me.anlear"
-version = "0.0.1-a"
+version = "0.0.1-b"
 
 application {
     mainClass = "io.ktor.server.netty.EngineMain"
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -21,8 +26,6 @@ dependencies {
     implementation("io.ktor:ktor-server-compression")
     implementation("io.ktor:ktor-server-host-common")
     implementation("io.ktor:ktor-server-status-pages")
-    implementation("io.ktor:ktor-server-auth")
-    implementation("io.ktor:ktor-server-auth-jwt")
     implementation("io.ktor:ktor-server-config-yaml")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.ktor:ktor-client-core")
@@ -38,8 +41,6 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-cors")
-    // telegram
-    implementation("dev.inmo:tgbotapi:29.0.1")
     // tests
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")

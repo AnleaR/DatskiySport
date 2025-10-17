@@ -1,36 +1,43 @@
 package me.anlear
 
-import api.telegramWebhookRoute
 import bot.TelegramService
+import bot.TelegramWebhook
 import config.ConfigProvider
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
-import io.ktor.server.routing.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import me.anlear.util.Utils
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
 }
 
-fun Application.module() {
-    configureSerialization()
-    configureMonitoring()
-    configureHTTP()
-    configureSecurity()
-    configureRouting()
+suspend fun Application.module() {
     Utils.ensureLogsDirectory()
 
     install(io.ktor.server.plugins.contentnegotiation.ContentNegotiation) {
         json()
     }
 
-    routing {
-        telegramWebhookRoute { update ->
-            // здесь вызов UpdateHandler.handle(update)
+    val config = ConfigProvider.get();
+
+    val appUrl = config.property("app.url").getString();
+    val secretLifetime = config.property("app.secretLifetime").getString().toInt();
+    val botToken = config.property("app.telegram.botToken").getString();
+    val webhookManager = TelegramWebhook(botToken, appUrl)
+
+    webhookManager.start(this, secretLifetime)
+    monitor.subscribe(ApplicationStopped) {
+        CoroutineScope(Dispatchers.Default).launch {
+            webhookManager.stop()
         }
     }
 
-    val config = ConfigProvider.get();
-    val token = config.property("app.telegram.botToken").getString();
-    TelegramService(token);
+    val dbUrl = config.property("app.database.url").getString()
+    val dbUser = config.property("app.database.user").getString()
+    val dbPassword = config.property("app.database.password").getString()
+
+    TelegramService(botToken);
 }
